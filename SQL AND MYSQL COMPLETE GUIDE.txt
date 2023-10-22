@@ -1,0 +1,970 @@
+SQL QUERY COMPLETE GUIDE
+
+WE ARE CREATEING A DATABSE OF CUSTOMER PRODUCT MANAGEMENT i.e SHOP MANAGEMENT 
+
+BASIC COMMOMDS:
+
+SHOW DATABASES;
+TO SHOW DATABASES IN OUR SYSTEM.
+
+show tables;
+TO SHOW TABLES.
+
+TO CREATE DATABASE :
+
+ CREATE DATABASE DATABASE_NAME;
+IN OUR CASE THE QUERY WILL BE : CREATE DATABASE SHOP_MANAGEMNT ; (DON'T USE SPACE)
+
+TO USE DATABSE :
+USE DATABASE_NAME
+USE SHOP_MANAGEMENT
+
+==========================================================================================
+
+CREATE
+
+NOW! FUTHER WE HAVE TO CREATE TABLES FOR OUR DATABASE 
+WE REQUIRED 4 TABLES 
+1.CUSTOMER
+2.PRODUCT
+3.ORDER
+4.TRANSACTION
+
+TO CREATE TABLE :
+SYNTAX:
+
+CREATE TABLE table_name (
+    column1 datatype,
+    column2 datatype,
+    column3 datatype,
+    ...
+    PRIMARY KEY (one_or_more_columns),
+    FOREIGN KEY (foreign_key_column) REFERENCES referenced_table(referenced_column)
+);
+
+Table name called as ENTITY .
+TABLE COLUMN NAME CALLED AS ATTRIBUTES.
+
+
+-- Create Customer Table
+CREATE TABLE CUSTOMER(
+	C_ID INT PRIMARY KEY,
+	C_NAME VARCHAR(50),
+	EMAIL VARCHAR(100),
+	PHONE VARCHAR(100)
+);
+
+-- Create Product Table
+ CREATE TABLE PRODUCT(
+	P_ID INT PRIMARY KEY,
+	P_NAME VARCHAR(50),
+	PRICE DECIMAL(10,2), 
+	STOCKQUANTITY INT)
+);
+
+-- Create Order Table
+CREATE TABLE `Order` (
+    O_ID INT PRIMARY KEY,
+    DATE DATE,
+    C_ID INT,
+    FOREIGN KEY (C_ID) REFERENCES Customer(C_ID)
+);
+
+
+-- Create Transaction Table
+CREATE TABLE Transaction (
+    T_ID INT PRIMARY KEY,
+    O_ID INT,
+    P_ID INT,
+    Quantity INT,
+    TotalAmount DECIMAL(10, 2),
+    FOREIGN KEY (O_ID) REFERENCES `Order`(O_ID),
+    FOREIGN KEY (P_ID) REFERENCES Product(P_ID)
+);
+
+show tables; (To see the tables)
+
+***********************************************************************************************
+
+INSERT : THIS IS USED TO INSERT THE VALUES IN YOUR TABLES
+
+INSERT INTO table_name (column1, column2, column3, ..., columnN)
+VALUES (value1, value2, value3, ..., valueN);
+
+
+-- INSERT FOR Customer Table 
+INSERT INTO Customer (C_ID,C_NAME,EMAIL,PHONE)
+VALUES  (1, 'Aishwarya Deshmukh', 'aishwarya.d@gmail.com', '123-456-7890');
+
+YOU CAN INSERT LIKE THIS:
+INSERT INTO CUSTOMER VALUES(2,'RAM SHARMA','ram.S@gmail.com','8899223311');
+
+FOR MULTIPLE INSERT AT A TIME:
+INSERT INTO Customer (C_ID, C_NAME, EMAIL, PHONE)
+VALUES
+  (3, 'Snehal Patil', 'snehal.p@gmail.com', '555-123-4567'),
+  (4, 'Rohit Shinde', 'rohit.s@gmail.com', '111-222-3333'),
+  (5, 'Pooja Dharmadhikari', 'pooja.d@gmail.com', '777-888-9999'),
+  (6, 'Akshay Gokhale', 'akshay.g@gmail.com', '444-555-6666'),
+  (7, 'Priya Pawar', 'priya.p@gmail.com', '999-888-7777'),
+  (8, 'Rahul Kulkarni', 'rahul.k@gmail.com', '666-777-8888'),
+  (9, 'Amruta Chavan', 'amruta.c@gmail.com', '222-333-4444'),
+  (10, 'Sagar Thakur', 'sagar.t@gmail.com', '888-777-6666');
+
+
+-- INSERT FOR PRODUCT TABLE
+
+INSERT INTO Product (P_ID, P_NAME, PRICE, StockQuantity)
+VALUES
+  (1, 'Milk', 2.50, 100),
+  (2, 'Bread', 1.20, 150),
+  (3, 'Eggs', 0.75, 200),
+  (4, 'Cheese', 3.50, 50),
+  (5, 'Chicken', 7.99, 30),
+  (6, 'Rice', 1.99, 120),
+  (7, 'Tomatoes', 0.50, 80),
+  (8, 'Bananas', 0.30, 100),
+  (9, 'Coffee', 4.75, 60),
+  (10, 'Toothpaste', 2.25, 75);
+
+
+-- INSERT FOR ORDER TABLE
+
+INSERT INTO `Order` (O_ID,DATE,C_ID)
+VALUES
+  (1, '2023-10-11',1),
+  (2, '2023-10-12',2),
+  (3, '2023-10-13',3),
+  (4, '2023-10-14',4),
+  (5, '2023-10-15',5),
+  (6, '2023-10-16',6),
+  (7, '2023-10-17',7),
+  (8, '2023-10-18',8),
+  (9,'2023-10-19',9),
+  (10,'2023-10-20',10);
+
+
+-- INSERT FOR TRANSACTION TABLE
+
+INSERT INTO Transaction (T_ID, O_ID, P_ID, Quantity, TotalAmount)
+VALUES
+  (1, 1, 1, 2, 5.00),
+  (2, 1, 2, 3, 3.60),
+  (3, 2, 3, 1, 0.75),
+  (4, 3, 4, 2, 7.00),
+  (5, 3, 5, 1, 7.99),
+  (6, 4, 6, 3, 5.97),
+  (7, 4, 7, 2, 1.00),
+  (8, 5, 8, 4, 1.20),
+  (9, 6, 9, 1, 4.75),
+  (10, 7, 10, 2, 4.50);
+
+
+*****************************************************************************************************
+
+TO SEE THE INSERTED DATA IN THE TABLE
+
+SELECT * FROM TABLE_NAME;
+
+Select Queries:
+
+Select all customers:
+SELECT * FROM Customer;
+
+SELECT * FROM `Order`; //Order IS A SQL KEYWORD SO EVERYTIME USE backticks (`) FOR Order
+select * FROM TRANSACTION;
+
+Select products with price less than $5:
+SELECT * FROM Product WHERE PRICE < 5.0;
+
+
+****************************************************************************************************
+
+UPDATE : USED TO UPDATE TABLE INFORMATION
+SYNTAX:
+UPDATE table_name
+SET column1 = value1, column2 = value2, ...
+WHERE condition;
+
+
+update product set p_name = 'gelley' where p_id = 1;
+SELECT * FROM PRODUCT;
+
+write for each table
+**********************************************************************************************************
+
+
+DELETE : To delete the table 
+
+SYNTAX:
+DELETE FROM table_name
+WHERE condition;
+
+DELETE FROM order
+where O_ID = 10 ;
+
+but in our case p_id is the foregin key 
+
+Delete Orders for the Customer First:
+
+You can delete the orders associated with the customer first, and then delete the customer. 
+This ensures that there are no references to the customer in the Order table.
+
+DELETE FROM `Order`
+WHERE C_ID = 10;
+
+DELETE FROM Customer
+WHERE C_ID = 10;
+ 
+
+Update Foreign Key References:
+
+If you don't want to delete orders, you could update the C_ID in the Order table to set it to NULL or another valid C_ID. 
+This will break the foreign key relationship and allow you to delete the customer.
+
+UPDATE `Order`
+SET C_ID = NULL
+WHERE C_ID = 10;
+
+DELETE FROM Customer
+WHERE C_ID = 10;
+
+
+*********************************************************************************************************
+ALTER 
+
+The ALTER statement in SQL is used to modify the structure of an existing database, table, or index.
+
+ALTER TABLE ExampleTable
+ADD COLUMN NewColumn VARCHAR(50);
+
+1. Add a new column
+ALTER TABLE table_name
+ADD COLUMN new_column_name data_type;
+
+Example : Alter table `order` add column price int;
+
+2.Modify Column Definition:
+ALTER TABLE table_name
+MODIFY COLUMN existing_column_name new_data_type;
+
+ALTER TABLE Product
+MODIFY COLUMN PRICE DECIMAL(12, 2);
+
+
+3.Add or Drop Constraints:
+ALTER TABLE table_name
+ADD CONSTRAINT constraint_name constraint_definition;
+
+ALTER TABLE Customer
+ADD CONSTRAINT unique_email UNIQUE (EMAIL);
+
+4.Rename Table:
+
+ALTER TABLE old_table_name
+RENAME TO new_table_name;
+
+
+Example: Rename the Transaction table to SalesTransaction.
+ALTER TABLE Transaction
+RENAME TO SalesTransaction;
+
+
+5.Drop a Column
+
+ALTER TABLE table_name
+DROP COLUMN column_name;
+
+
+
+6. Add Or Remove Index :
+ALTER TABLE table_name
+ADD INDEX index_name (column_name);
+
+
+ALTER TABLE table_name
+DROP INDEX index_name;
+
+
+7. Change Table Engine :
+ALTER TABLE table_name
+ENGINE = new_engine;
+
+ALTER TABLE `Order`
+ENGINE = InnoDB;
+
+
+8. Add Foreign Key
+ALTER TABLE table_name
+ADD CONSTRAINT foreign_key_name
+FOREIGN KEY (column_name) REFERENCES referenced_table(referenced_column);
+
+
+9. Set Default value :
+ALTER TABLE table_name
+ALTER COLUMN column_name SET DEFAULT default_value;
+
+
+10. Rename Column 
+ALTER TABLE table_name
+CHANGE COLUMN old_column_name new_column_name data_type;
+
+**********************************************************
+
+Aggregation Queries:
+
+Aggregation queries in SQL involve the use of aggregate functions to perform a calculation on a set of values and return a single value. 
+
+1.Count the number of products in stock:
+
+SELECT COUNT(*) AS TotalProductsInStock
+FROM Product
+WHERE StockQuantity > 0;
+
+2. Find the average price of products:
+
+SELECT AVG(PRICE) AS AveragePrice
+FROM Product;
+
+3. Get the total sales amount:
+
+SELECT SUM(TotalAmount) AS TotalSales
+FROM Transaction;
+
+
+4. Finds the minimum value in a column.
+SELECT MIN(ColumnName) FROM TableName;
+
+5.Finds the maximum value in a column.
+SELECT MAX(ColumnName) FROM TableName;
+
+Aggregation queries are often used in conjunction with the GROUP BY clause, which groups rows that have the same values in specified columns into summary rows.
+
+Example using GROUP BY with COUNT:
+
+SELECT Category, COUNT(*) AS NumberOfProducts
+FROM Products
+GROUP BY Category;
+
+
+****************************************************
+
+Joins and Subqueries:
+
+
+The JOIN operation in SQL is used to combine rows from two or more tables based on a related column between them. There are different types of joins, including INNER JOIN, LEFT JOIN (or LEFT OUTER JOIN), RIGHT JOIN (or RIGHT OUTER JOIN), and FULL JOIN (or FULL OUTER JOIN). Here's the basic syntax for the INNER JOIN and LEFT JOIN:
+
+
+INNER JOIN Syntax:
+
+SELECT columns
+FROM table1
+INNER JOIN table2 ON table1.column_name = table2.column_name;
+
+
+LEFT JOIN Syntax:
+
+SELECT columns
+FROM table1
+LEFT JOIN table2 ON table1.column_name = table2.column_name;
+
+RIGHT JOIN Syntax:
+
+SELECT columns
+FROM table1
+RIGHT JOIN table2 ON table1.column_name = table2.column_name;
+
+FULL JOIN Syntax:
+
+SELECT columns
+FROM table1
+FULL JOIN table2 ON table1.column_name = table2.column_name;
+
+Examples :
+1. Find customers who made transactions:
+
+SELECT C.C_NAME
+FROM Customer C
+WHERE C.C_ID IN (SELECT DISTINCT C_ID FROM `Order`);
+
+2. Show products and their orders:
+
+SELECT P.P_NAME, O.O_ID
+FROM Product P
+JOIN Transaction T ON P.P_ID = T.P_ID
+JOIN `Order` O ON T.O_ID = O.O_ID;
+
+3. Find customers who haven't made any orders:
+
+SELECT C.C_NAME
+FROM Customer C
+LEFT JOIN `Order` O ON C.C_ID = O.C_ID
+WHERE O.C_ID IS NULL;
+
+
+********************************************
+
+
+Joins:
+
+INNER JOIN:
+SELECT * FROM Orders
+INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID;
+
+LEFT JOIN:
+SELECT * FROM Customers
+LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID;
+
+RIGHT JOIN:
+SELECT * FROM Orders
+RIGHT JOIN Customers ON Orders.CustomerID = Customers.CustomerID;
+
+FULL OUTER JOIN:
+SELECT * FROM Customers
+FULL OUTER JOIN Orders ON Customers.CustomerID = Orders.CustomerID;
+
+
+***************************************************
+
+Subqueries:
+IN Subquery:
+SELECT * FROM ExampleTable WHERE ID IN (SELECT ID FROM AnotherTable);
+
+EXISTS Subquery:
+SELECT * FROM ExampleTable WHERE EXISTS (SELECT 1 FROM AnotherTable WHERE AnotherTable.ID = ExampleTable.ID);
+
+
+********************************************
+
+Miscellaneous Queries:
+These queries cover a variety of tasks or scenarios that may be unique to your data or requirements. 
+
+1. Find the product with the highest price:
+
+SELECT * FROM Product
+ORDER BY PRICE DESC
+LIMIT 1;
+
+2. Show the top 5 customers by the number of orders:
+
+SELECT C.C_NAME, COUNT(O.O_ID) AS TotalOrders
+FROM Customer C
+LEFT JOIN `Order` O ON C.C_ID = O.C_ID
+GROUP BY C.C_ID, C.C_NAME
+ORDER BY TotalOrders DESC
+LIMIT 5;
+
+******************************************************************
+
+Unique Constraint :
+
+The UNIQUE constraint ensures that all values in a column are unique, i.e., no two rows can have the same value in that particular column. It is often applied to columns that should have distinct values across all rows in a table.
+
+CREATE TABLE UniqueExample (
+    Email VARCHAR(100) UNIQUE,
+    Phone VARCHAR(15) UNIQUE
+);
+
+
+SELECT DISTINCT ColumnName
+FROM TableName;
+
+************************************************
+
+Not Null Constraint:
+The NOT NULL constraint ensures that a column cannot have a NULL value, meaning that every row must have a valid (non-null) value for that column.
+
+CREATE TABLE NotNullExample (
+    ID INT PRIMARY KEY,
+    Name VARCHAR(50) NOT NULL
+);
+
+
+Combined Use:
+You can also use both UNIQUE and NOT NULL constraints on the same column, depending on your data requirements.
+
+Example:
+
+CREATE TABLE CombinedConstraintsTable (
+    ID INT PRIMARY KEY,
+    UniqueNotNullColumn INT UNIQUE NOT NULL,
+    OtherColumn VARCHAR(50)
+);
+
+*************************************************************
+
+Table Operations:
+
+Truncate Table:
+quickly delete all rows from a table without removing the table structure (columns, constraints, etc.).
+
+TRUNCATE TABLE TableName;
+TRUNCATE TABLE UniqueExample;
+
+Drop Table:
+DROP TABLE IF EXISTS ExampleTable2;
+
+
+Keep in mind the following points when using TRUNCATE TABLE:
+
+Speed: TRUNCATE TABLE is faster than DELETE because it doesn't generate individual row delete statements.
+
+Rollback: Unlike DELETE, TRUNCATE TABLE cannot be rolled back. Once you truncate a table, the data is permanently removed.
+
+Constraints: TRUNCATE TABLE might not be allowed if the table is referenced by a foreign key constraint from another table or participates in an indexed view. In such cases, you might need to temporarily drop the foreign key constraints, truncate the table, and then recreate the constraints.
+
+Example with Constraints:
+
+-- Temporarily drop foreign key constraints
+ALTER TABLE OtherTable DROP CONSTRAINT FK_ConstraintName;
+
+-- Truncate the table
+TRUNCATE TABLE ExampleTable;
+
+-- Recreate foreign key constraints
+ALTER TABLE OtherTable ADD CONSTRAINT FK_ConstraintName FOREIGN KEY (ForeignKeyColumn) REFERENCES ExampleTable(PrimaryKeyColumn);
+
+**************************************************
+
+Permissions:
+
+The GRANT and REVOKE statements in SQL are used to manage permissions for database users. 
+
+Grant Permission:
+GRANT SELECT, INSERT, UPDATE ON ExampleTable TO 'user'@'localhost';
+
+Explanation:
+GRANT: Initiates the granting of permissions.
+
+SELECT, INSERT, UPDATE: Specifies the permissions being granted (in this case, the ability to perform SELECT, INSERT, and UPDATE operations).
+
+ON ExampleTable: Specifies the table to which the permissions are being granted (replace ExampleTable with the actual table name).
+
+TO 'user'@'localhost': Specifies the user and the host to which the permissions are being granted. In this example, the user is 'user' and the host is 'localhost'.
+
+
+Revoke Permission:
+REVOKE INSERT ON ExampleTable FROM 'user'@'localhost';
+
+REVOKE: Initiates the revoking of permissions.
+
+***************************************************
+
+Transaction Control:
+
+Start a Transaction:
+START TRANSACTION;
+
+Initiates a new transaction. Any subsequent SQL statements will be part of this transaction until it is committed or rolled back.
+
+Commit a Transaction:
+COMMIT;
+
+Saves all changes made during the current transaction to the database. It makes the changes permanent.
+
+Rollback a Transaction:
+ROLLBACK;
+
+Undoes all changes made during the current transaction. It is used when something goes wrong, and you want to discard the changes.
+
+Savepoint:
+SAVEPOINT savepoint_name;
+
+Creates a point within a transaction to which you can later roll back. This is useful when you want to undo part of a transaction without affecting the entire transaction.
+
+
+EXAMPLE :
+START TRANSACTION;
+
+-- Some SQL statements
+
+SAVEPOINT my_savepoint;
+
+-- More SQL statements
+
+ROLLBACK TO my_savepoint;
+
+-- Further statements or actions
+
+COMMIT;
+
+
+***************************************************
+
+Auto Increment:
+
+The AUTO_INCREMENT attribute is commonly used for generating unique, sequential numbers automatically for a column, typically for primary key columns. 
+
+CREATE TABLE AutoIncrementExample (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(50)
+);
+
+************************************************
+
+Copying Tables:
+
+Copy Structure:
+CREATE TABLE NewTable AS SELECT * FROM ExistingTable WHERE 1=0;
+
+Copy with Data:
+CREATE TABLE NewTable AS SELECT * FROM ExistingTable;
+
+Conditions:
+WHERE Clause:
+SELECT * FROM ExampleTable WHERE ID = 1;
+
+AND, OR, IN, NOT IN:
+SELECT * FROM ExampleTable WHERE Name = 'John' AND Age > 25;
+
+SELECT * FROM ExampleTable WHERE City = 'New York' OR City = 'Los Angeles';
+
+SELECT * FROM ExampleTable WHERE Age IN (25, 30, 35);
+
+SELECT * FROM ExampleTable WHERE Country NOT IN ('USA', 'Canada');
+
+NULL, NOT NULL:
+SELECT * FROM ExampleTable WHERE Email IS NULL;
+
+SELECT * FROM ExampleTable WHERE Phone IS NOT NULL;
+
+BETWEEN:
+SELECT * FROM ExampleTable WHERE Salary BETWEEN 50000 AND 80000;
+
+DISTINCT:
+SELECT DISTINCT Country FROM ExampleTable;
+
+*********************************************
+Aggregate Functions:
+
+Min, Max, Count, Average:
+
+SELECT MIN(Salary) FROM Employees;
+SELECT MAX(Age) FROM Customers;
+SELECT COUNT(*) FROM Orders;
+SELECT AVG(Price) FROM Products;
+
+Sorting and Limiting:
+
+ORDER BY:
+SELECT * FROM ExampleTable ORDER BY Name ASC;
+
+LIMIT:
+SELECT * FROM ExampleTable LIMIT 10;
+
+Grouping:
+SELECT Country, COUNT(*) FROM Customers GROUP BY Country;
+
+*************************************************
+
+************************************************
+
+Union, Intersection, Minus:
+UNION:
+SELECT * FROM Table1 ;
+UNION
+SELECT * FROM Table2;
+
+INTERSECT:
+SELECT * FROM Table1
+INTERSECT
+SELECT * FROM Table2;
+
+MINUS (or EXCEPT):
+SELECT * FROM Table1
+MINUS
+SELECT * FROM Table2;
+
+************************************************
+View:
+
+
+A view in a relational database is a virtual table that is based on the result of a SELECT query. It doesn't store the data itself but represents a stored query that can be referenced and used like a table. Views provide a way to simplify complex queries, abstract the underlying data structure, and control access to specific columns or rows of a table.
+
+SYNTAX :
+CREATE VIEW view_name AS
+SELECT column1, column2, ...
+FROM table_name
+WHERE condition;
+
+Create View:
+CREATE VIEW CustomerInfo AS
+SELECT C_ID, C_NAME, EMAIL
+FROM Customer;
+
+Once a view is created, you can use it in SELECT statements, JOIN operations, and other queries as if it were a table.
+
+Use View:
+SELECT * FROM CustomerInfo;
+
+update a view :
+UPDATE EmployeeView SET Department = 'HR' WHERE EmployeeID = 123;
+
+
+************************************************
+Temporary Table:
+
+A temporary table is a table that exists temporarily within the scope of a session or a transaction.
+It is created to store and process intermediate results during the execution of complex queries or to isolate temporary data for a specific task. 
+Temporary tables are particularly useful when you need to perform multi-step operations or store interim results within a session without affecting the permanent database tables.
+
+CREATE TEMPORARY TABLE temp_table (
+    column1 datatype1,
+    column2 datatype2,
+    ...
+);
+
+
+Create Temporary Table:
+CREATE TEMPORARY TABLE TempTable AS SELECT * FROM OriginalTable;
+
+-- Create a temporary table for a specific session
+CREATE TEMPORARY TABLE TempProduct AS
+SELECT * FROM Product
+WHERE StockQuantity > 50;
+
+-- Use the temporary table
+SELECT * FROM TempProduct;
+
+************************************************
+Index:
+An index in a database is a data structure that enhances the speed of data retrieval operations on a database table by providing a quick lookup mechanism for locating specific rows based on the indexed columns.
+
+Create Index:
+CREATE INDEX idx_name ON ExampleTable(Name);
+
+-- Create an index on the Product table
+CREATE INDEX idx_product_name ON Product(P_NAME);
+
+-- Drop an index
+DROP INDEX idx_product_name ON Product;
+
+
+***********************************************
+Function:
+
+you have to set delimiter before creating and after creating function .
+
+-- Set delimiter to //
+DELIMITER //
+
+-- Create Function
+CREATE FUNCTION CalculateTotal(price DECIMAL(10, 2), quantity INT) RETURNS DECIMAL(10, 2)
+BEGIN
+    RETURN price * quantity;
+END//
+
+-- Reset delimiter to ;
+DELIMITER ;
+
+
+Explanation:
+DELIMITER //: Changes the statement delimiter to //.
+CREATE FUNCTION ... END//: Defines the body of the function using the BEGIN and END block.
+DELIMITER ;: Resets the delimiter back to the default ;.
+
+The change in delimiter is necessary because the body of the function contains semicolons (;) for statement separation, and changing the delimiter prevents premature execution of statements.
+
+Example Usage:
+
+-- Call the function
+SELECT CalculateTotal(2.5, 10) AS Total;
+
+
+
+************************************************
+Procedure:
+
+Stored procedures in SQL are used for modular code organization, reusability, parameterization, security, transaction management, performance optimization, batch processing, encapsulating business logic, reducing network traffic, and error handling.
+
+
+-- Set delimiter to //
+DELIMITER //
+
+-- Create Procedure
+CREATE PROCEDURE GetCustomerInfo(IN customerID INT)
+BEGIN
+    SELECT * FROM Customer WHERE C_ID = customerID;
+END //
+
+-- Reset delimiter to ;
+DELIMITER ;
+
+EXAMPLE :
+
+-- Call the procedure
+CALL GetCustomerInfo(1);
+
+
+
+**************************************************
+
+Exception Handling:
+Exception handling allows you to define how your program should respond when an error (exception) occurs during execution.
+
+-- Declare a custom error condition
+DECLARE custom_error CONDITION FOR SQLSTATE '45000';
+
+-- Declare a handler for SQL exceptions
+DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
+BEGIN
+    -- Signal the custom error with a custom message
+    SIGNAL custom_error SET MESSAGE_TEXT = 'Custom error message';
+END;
+
+
+Explanation:
+DECLARE custom_error CONDITION FOR SQLSTATE '45000';: Declares a custom condition named custom_error associated with a specific SQLSTATE value.
+
+DECLARE CONTINUE HANDLER FOR SQLEXCEPTION ... END;: Declares a handler for SQL exceptions. The CONTINUE keyword specifies that the program should continue execution after handling the exception.
+
+SIGNAL custom_error SET MESSAGE_TEXT = 'Custom error message';: Signals the custom error condition with a custom error message.
+****************************************************
+Loops:
+
+While Loop: Executes a block of statements while a specified condition is true.
+
+Repeat Loop: Executes a block of statements until a specified condition is true.
+
+Loop: Executes a block of statements indefinitely, with an exit condition controlled by the programmer.
+
+While Loop:
+
+SET @counter = 0;
+WHILE @counter < 10 DO
+    -- Loop body
+    SET @counter = @counter + 1;
+END WHILE;
+
+
+Repeat Loop:
+
+SET @counter = 0;
+REPEAT
+    -- Loop body
+    SET @counter = @counter + 1;
+UNTIL @counter >= 10 END REPEAT;
+
+Loop:
+
+SET @counter = 0;
+LOOP
+    -- Loop body
+    SET @counter = @counter + 1;
+    IF @counter >= 10 THEN
+        LEAVE;
+    END IF;
+END LOOP;
+
+***************************************************
+
+Cursor:
+Cursors are used to iterate over a result set returned by a SELECT statement.
+They provide a way to process each row of a result set one at a time.
+Cursors are often used when you need to perform operations on individual rows within a loop.
+
+SYNTAX:
+
+-- Declare variables
+DECLARE done INT DEFAULT FALSE;
+DECLARE customerCursor CURSOR FOR SELECT C_ID, C_NAME FROM Customer;
+DECLARE customerID INT;
+DECLARE customerName VARCHAR(50);
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
+-- Open the cursor
+OPEN customerCursor;
+
+-- Loop through the cursor result set
+read_loop: LOOP
+    FETCH customerCursor INTO customerID, customerName;
+    IF done THEN
+        LEAVE read_loop;
+    END IF;
+    -- Process data (use customerID and customerName)
+END LOOP;
+
+-- Close the cursor
+CLOSE customerCursor;
+
+
+*************************************************
+*
+Trigger:
+Purpose of Triggers:
+Automation: Triggers automatically execute a set of SQL statements in response to specific events (e.g., BEFORE INSERT, AFTER UPDATE).
+Enforcing Business Rules: Triggers are often used to enforce business rules or integrity constraints before data modifications.
+Logging: Triggers can be used to log changes or maintain audit trails for data modifications.
+Default Values: Triggers can set default values for columns during INSERT operations.
+Complex Validation: Triggers allow for more complex validation and actions beyond what can be achieved with constraints.
+
+EXAMPLE:
+CREATE TRIGGER BeforeInsertCustomer
+BEFORE INSERT ON Customer
+FOR EACH ROW
+SET NEW.CREATED_AT = NOW();
+
+
+1.Before Insert Trigger for Product Price Check:
+
+CREATE TRIGGER BeforeInsertProduct
+BEFORE INSERT ON Product
+FOR EACH ROW
+BEGIN
+    IF NEW.PRICE < 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Invalid product price';
+    END IF;
+END;
+
+This trigger ensures that the price of a new product is non-negative.
+
+
+2. After Update Trigger for Order Total Update:
+
+CREATE TRIGGER AfterUpdateOrder
+AFTER UPDATE ON `Order`
+FOR EACH ROW
+BEGIN
+    UPDATE `Order` SET TotalAmount = (
+        SELECT SUM(Transaction.TotalAmount)
+        FROM Transaction
+        WHERE Transaction.O_ID = NEW.O_ID
+    ) WHERE O_ID = NEW.O_ID;
+END;
+
+This trigger updates the total amount of an order after any update to the order's transactions.
+
+
+3. Before Delete Trigger to Prevent Deleting Customer with Orders:
+
+CREATE TRIGGER BeforeDeleteCustomer
+BEFORE DELETE ON Customer
+FOR EACH ROW
+BEGIN
+    DECLARE orderCount INT;
+
+    SELECT COUNT(*) INTO orderCount
+    FROM `Order`
+    WHERE C_ID = OLD.C_ID;
+
+    IF orderCount > 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Cannot delete customer with existing orders';
+    END IF;
+END;
+
+This trigger prevents deleting a customer who has existing orders.
+
+4. After Insert Trigger for Transaction Logging:
+
+CREATE TRIGGER AfterInsertTransaction
+AFTER INSERT ON Transaction
+FOR EACH ROW
+BEGIN
+    INSERT INTO TransactionLog (TransactionID, Action, LogTime)
+    VALUES (NEW.T_ID, 'Insert', NOW());
+END;
+
+This trigger logs the details of a new transaction into a TransactionLog table.
+****************************************************
